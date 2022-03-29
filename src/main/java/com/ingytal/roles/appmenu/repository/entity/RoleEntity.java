@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +18,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
@@ -30,9 +34,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Table (name = "role")
 @AllArgsConstructor @NoArgsConstructor @Builder
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+//@JsonIdentityInfo(
+		  //generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  //property = "id")
 public class RoleEntity {
 	
 	@Id
@@ -50,7 +54,7 @@ public class RoleEntity {
 	@Temporal(TemporalType.TIMESTAMP)
     private Date create_at;
 	
-	
+	@JsonIgnoreProperties("role")
 	@ManyToMany(mappedBy = "role")
     private List<UserEntity> user;
 

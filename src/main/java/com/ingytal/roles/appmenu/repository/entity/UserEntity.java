@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +19,11 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.Date;
@@ -33,9 +37,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Table (name = "user")
 @AllArgsConstructor @NoArgsConstructor @Builder
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+//@JsonIdentityInfo(
+		  //generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  //property = "id")
 public class UserEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +61,7 @@ public class UserEntity {
 	@Temporal(TemporalType.TIMESTAMP)
     private Date create_at;
 	
-
+	@JsonIgnoreProperties("user")
     @ManyToMany
     @JoinTable( 
         name = "user_role", 
